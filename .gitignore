@@ -11,3 +11,5 @@
 \my-app\platforms\ios\www\spec.html
 \my-app\platforms\ios\www\
 
+
+*.xcuserstate
