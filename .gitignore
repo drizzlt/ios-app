@@ -1,0 +1,13 @@
+\my-app\plugins\*
+\my-app\www\*
+\my-app\platforms\ios\build\*
+\my-app\platforms\ios\cordova\*
+\my-app\platforms\ios\CordovaLib\*
+\my-app\platforms\ios\HelloWorld\*
+\my-app\platforms\ios\.xcodeproj
+\my-app\platforms\ios\platform_www\*
+\my-app\platforms\ios\www\phonegap.js
+\my-app\platforms\ios\www\spec\*
+\my-app\platforms\ios\www\spec.html
+\my-app\platforms\ios\www\
+
