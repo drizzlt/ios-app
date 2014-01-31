@@ -18,7 +18,6 @@ var data = {};
 
 
 
-
 var app = {
     // Application Constructor
     initialize: function() {
@@ -29,12 +28,12 @@ var app = {
     },
     onDeviceReady: function() {
         //TODO: jak ogarne jak pobrac rozmiar ekranu to tu to zmienie, narazie na sztywno
-        var div = document.createElement("div");
-        div.id="map";
-        div.style.width = "320px";
-        div.style.height = "450px";
-        document.body.appendChild(div);
-
+        //var mapDiv = document.createElement("div");
+        //mapDiv.id="map";
+        //mapDiv.style.width = "320px";
+        //mapDiv.style.height = "400px";
+        //document.body.appendChild(mapDiv);
+        
         initializeMap();
     },
 
@@ -139,7 +138,7 @@ function drawLine(points_table, color){
     });
     lines_table_shape.push(path);
     path.setMap(map);
-    //showDistance();
+    showDistance();
 }
 function setPointStyle(number){
     var style_table = [];
@@ -182,3 +181,90 @@ function setLineStyle(number){
 Array.prototype.insert = function (index, item) {
   this.splice(index, 0, item);
 };
+function deletePoints(start, quantity, markerId){
+    
+    for(i=start; i<=quantity; i++){
+        points_table_shape[i].setMap(null);
+
+    }
+    
+
+    points_table_shape[markerId].id = points_table_shape.length-1-quantity;
+    points_table.splice(start,quantity);
+    points_table_shape.splice(start, quantity);  
+    pathNumber--;
+}
+function deletePoint(point){
+    points_table.splice(point,1);
+    points_table_shape[point].setMap(null);
+    points_table_shape.splice(point, 1);  
+    pointsCounter--;
+    for(i=point; i< points_table_shape.length; i++){
+        points_table_shape[i].id --;
+        points_table_shape[i].title --;
+    }
+}
+function removeLastPoint(){
+    var counter= 0;
+    if(points_table_shape.length>1){
+        if(points_table_shape[points_table_shape.length-2].pathNumber=="Null" && points_table_shape[points_table_shape.length-1].pathNumber=="Null"){
+            if (points_table.length>0) {
+                points_table.pop();
+                points_table_shape[points_table_shape.length-1].setMap(null);
+                points_table_shape.pop();
+                pointsCounter--;
+                drawLine(points_table, 1);
+            }
+        }
+        else{
+            for(i=0;i<points_table_shape.length; i++){
+                if(points_table_shape[i].pathNumber == points_table_shape[points_table_shape.length-2].pathNumber){
+                    counter++;
+                }
+            }
+            for(i =0; i<=counter; i++){
+                if (points_table.length>0) {
+                    points_table.pop();
+                    points_table_shape[points_table_shape.length-1].setMap(null);
+                    points_table_shape.pop();
+                    pointsCounter--;
+                    
+                }
+
+            }
+            drawLine(points_table, 1);
+        }
+    }
+}
+function clearTables(){
+    var state = confirm("Czy na pewno?");
+    if(state){
+        for(i=0; i< points_table_shape.length; i++){
+            points_table_shape[i].setMap(null);
+        }
+        for(i=0; i< lines_table_shape.length; i++){
+            lines_table_shape[i].setMap(null);
+        }
+
+        points_table = new Array();
+        points_table_shape = new Array();
+        lines_table_shape = new Array();
+    }
+}
+function showDistance(){
+    featureLength = totalDistance();
+    document.getElementById("length").innerHTML = featureLength.toFixed(2) + " km   "+" " ;
+}
+function totalDistance(){
+    var dist=0.0;
+    for(var i=1; i<points_table.length; i++){
+        var point1 = points_table[i-1];
+        var point2 = points_table[i];
+        
+        dist += google.maps.geometry.spherical.computeDistanceBetween(point1, point2)/1000;
+    }
+    return dist;
+}
+function dupa(){
+    alert("dupa");
+}
