@@ -35,10 +35,6 @@ var app = {
         div.style.height = "450px";
         document.body.appendChild(div);
 
-
-
-
-        //navigator.geolocation.getCurrentPosition(app.onSuccess, app.onError);
         initializeMap();
     },
 
@@ -63,25 +59,126 @@ function initializeMap(){
     google.maps.event.addListener(map, 'click', function(e){
         update_timeout = setTimeout(function(){
             points_table.push(e.latLng);
-            drawPoint(e.latLng);
+            drawPoint(points_table,e.latLng, "Null", "Null", 2);
             pointsCounter++;
+            if(points_table.length>1){
+                drawLine(points_table,1);
+            }
 
         }, 200); 
 
     });
-}
-function drawPoint(pointLatLng){
-    var marker = new google.maps.Marker({
-        position: pointLatLng,
-        icon:{
-            path: google.maps.SymbolPath.CIRCLE,
-            scale: 4,
-            strokeColor: "#0000FF",
-            strokeOpacity: 0.8,
-            strokeWeight: 2,
-            fillColor: "red",
-            fillOpacity: 0.4
-        },
-        map: map
+    google.maps.event.addListener(map, 'dblclick', function(event) {       
+        clearTimeout(update_timeout);
     });
+
 }
+function drawPoint(points_table,pointLatLng, pNumber, where, color){
+    var style_table = [];
+    style_table = setPointStyle(color);
+    var scale = style_table[0];
+    var strokeColor = style_table[1];
+    var strokeOpacity = style_table[2];
+    var strokeWeight = style_table[3];
+    var fillColor = style_table[4];
+    var fillOpacity = style_table[5];
+
+    var marker=new google.maps.Marker({
+        position:pointLatLng,
+        icon: {
+            path: google.maps.SymbolPath.CIRCLE,
+            scale: scale,
+            strokeColor: strokeColor,
+            strokeOpacity: strokeOpacity,
+            strokeWeight: strokeWeight,
+            fillColor: fillColor,
+            fillOpacity: fillOpacity
+        },
+        draggable:true,
+        idInitial: pointsCounter,
+        id: pointsCounter,
+        pathNumber: pNumber,
+        title: ""+pointsCounter,
+        map: map
+
+    });
+    if(where!="Null"){
+        points_table_shape.insert(where, marker)
+    }
+    else
+        points_table_shape.push(marker);
+
+    google.maps.event.addListener(marker, 'click', function(e){
+        
+        alert(marker.id+ " + " + marker.position);
+
+    });
+    google.maps.event.addListener(marker, 'drag', function(e){
+        
+        points_table[marker.id] = e.latLng;   
+        drawLine(points_table, 1);
+    });
+
+}
+function drawLine(points_table, color){
+    var style_table = [];
+    style_table=  setLineStyle(color); 
+    for(i=0; i<lines_table_shape.length; i++){
+        lines_table_shape[i].setMap(null);
+    }
+
+    for(i=0; i<lines_table_shape.length; i++){
+        lines_table_shape.pop();
+    }
+        
+    var path = new google.maps.Polyline({
+        path: points_table,
+        strokeColor: style_table[0],
+        strokeOpacity: style_table[1],
+        strokeWeight: style_table[2],
+    });
+    lines_table_shape.push(path);
+    path.setMap(map);
+    //showDistance();
+}
+function setPointStyle(number){
+    var style_table = [];
+
+    if(number ==1){
+        style_table[0]= "#0000FF";
+        style_table[1] = 0.8;
+        style_table[2] = 2;
+        style_table[3] = "#0000FF";
+        style_table[4] = 0.4;
+    }
+    if(number ==2){
+        style_table[0]= 3; //scale
+        style_table[1]= "#0000FF"; //strokeColor
+        style_table[2] = 0.8; //strokeOpacity
+        style_table[3] = 2; //strokeWeight
+        style_table[4] = "red";//fillColor
+        style_table[5] = 0.4; //fillOpacity
+    }
+    return style_table;
+
+
+}
+function setLineStyle(number){
+
+    var style_table = [];
+    if(number == 1){
+        style_table[0]= '#0000ff'; //strokeColor
+        style_table[1]= 0.5; // strokeOpacity
+        style_table[2]= 5; //strokeWeight
+    }
+    if(number == 2){
+        style_table[0]= '#6CF'; //strokeColor
+        style_table[1]= 0.5; // strokeOpacity
+        style_table[2]= 5; //strokeWeight
+    }
+    return style_table;
+    
+}
+Array.prototype.insert = function (index, item) {
+  this.splice(index, 0, item);
+};
