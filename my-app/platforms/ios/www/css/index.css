@@ -94,12 +94,12 @@ h1 {
 .blink {
     animation:fade 3000ms infinite;
     -webkit-animation:fade 3000ms infinite;
+    background:url(../img/settings-icon-72-72.png) no-repeat center top;
 }
 #panelCenter{
     border: 1px solid black;
     opacity: 0.8;
     background: black;
-    width: 103px; height: 38px;
     float:left;
 }
 #length{
@@ -108,9 +108,12 @@ h1 {
     font-family: Verdana;
 }
 #buttonLeft{
-    margin-left: 6px;
+    float: left;
 }
-.Button{
+#buttonRight{
+    float: left;
+}
+.CustomButton{
     border: 0 none;
     border-radius: 2px 2px 2px 2px;
     color: #FFFFFF;
@@ -134,10 +137,8 @@ h1 {
     float: left;
 
 }
-.Button:active .Button:hover .Button:focus{
+.CustomButton:active .CustomButton:hover .CustomButton:focus{
     background: none repeat scroll 0 0 #999999;
     color: #FFFFFF;
 }
-img[src="http://maps.gstatic.com/mapfiles/google_white.png"]{
-    display: none;
-}
+

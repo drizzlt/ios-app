@@ -27,14 +27,11 @@ var app = {
         document.addEventListener('deviceready', this.onDeviceReady, false);
     },
     onDeviceReady: function() {
-        //TODO: jak ogarne jak pobrac rozmiar ekranu to tu to zmienie, narazie na sztywno
-        //var mapDiv = document.createElement("div");
-        //mapDiv.id="map";
-        //mapDiv.style.width = "320px";
-        //mapDiv.style.height = "400px";
-        //document.body.appendChild(mapDiv);
-        
+        //TODO: jak ogarne jak pobrac rozmiar ekranu to tu to zmienie, narazie na sztywno --->Solving
+
+        resolution_handling();
         initializeMap();
+
     },
 
 
