@@ -13,7 +13,8 @@ function resolution_handling() {
     $("#mpa").css("width", viewport.width+"px");
     $("#map").css("height", viewport.height+"px");
 
-    $("#buttonLeft").css("width", (viewport.width*1/4) );
-    $("#buttonRight").css("width", (viewport.width*1/4) );
-    $("#panelCenter").css("width", (viewport.width*1/4) );
+    $("#buttonLeft").css("width", ((viewport.width*1/3)-20)+"px" );
+    $("#buttonRight").css("width", ((viewport.width*1/3)-20)+"px" );
+    $("#panelCenter").css("width", ((viewport.width*1/3)-12)+"px" );
+    $("#panelCenter").css("height", buttonSize.height+"px");
 }

@@ -51,6 +51,25 @@ function initializeMap(){
         zoom:6,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     };
+     $("#search").bind( "keyup change", function() {
+        var loc = this.value;
+
+        geocoder.geocode( { 'address': loc}, function(results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                map.fitBounds(results[0].geometry.viewport);
+            }
+        });
+    });
+    $(document).on('change', "input[name*='radio2-choice-']", function(){ 
+        var choice = $(this).val();
+        if(choice=="choice-1"){
+            checkStickStatus=1;
+        }
+        else{
+            checkStickStatus=0;
+        }
+        
+    });  
         
     map = new google.maps.Map(document.getElementById("map"), mapOptions);
     google.maps.event.addListener(map, 'click', function(e){
@@ -59,53 +78,53 @@ function initializeMap(){
             drawPoint(points_table,e.latLng, "Null", "Null", 2);
             pointsCounter++;
             if(points_table.length>1){
-                if(points_table.length>1){
-                    if(checkStickStatus){
+                
+                if(checkStickStatus){
                                       //calcRoute(points_table);
-                        entire_path = new Array();
-                        calcRoute(points_table[points_table.length-2], points_table[points_table.length-1], function(results){
+                    entire_path = new Array();
+                    calcRoute(points_table[points_table.length-2], points_table[points_table.length-1], function(results){
 
-                            response_table.push(results);
-                            //var routePath = results.routes[0].overview_path;
-                            var table=[];
-                            var legPath = results.routes[0].legs[0];
-                            var wp = legPath.via_waypoints 
-                            
-                            for(var i=0; i<legPath.steps.length;i++){
-                                for(var j=0; j< legPath.steps[i].path.length;j++){
-                                    //alert(legPath.steps[i].path[j]);
-                                    entire_path.push(legPath.steps[i].path[j]);
-                                }
-                                
+                        response_table.push(results);
+                        //var routePath = results.routes[0].overview_path;
+                        var table=[];
+                        var legPath = results.routes[0].legs[0];
+                        var wp = legPath.via_waypoints 
+                        
+                        for(var i=0; i<legPath.steps.length;i++){
+                            for(var j=0; j< legPath.steps[i].path.length;j++){
+                                //alert(legPath.steps[i].path[j]);
+                                entire_path.push(legPath.steps[i].path[j]);
                             }
                             
-                               // alert(legPath);
-                                //entire_path.push(table)
-                                //drawLine(entire_path);
-                                var l = points_table[points_table.length-1];
-                                removeLastPoint();
+                        }
+                        
+                           // alert(legPath);
+                            //entire_path.push(table)
+                            //drawLine(entire_path);
+                            var l = points_table[points_table.length-1];
+                            removeLastPoint();
+                            
+                            
+                            
+                            for(var i =0; i < entire_path.length; i++){
+                               
                                 
-                                
-                                
-                                for(var i =0; i < entire_path.length; i++){
-                                   
-                                    
-                                    points_table.push(entire_path[i]);
-                                    drawPoint(points_table, entire_path[i], pathNumber, "Null", 2);
-                                    pointsCounter++;
-                                    
-                                }
-                                points_table.push(l);
-                                drawPoint(points_table, l, "Null", "Null", 2);
+                                points_table.push(entire_path[i]);
+                                drawPoint(points_table, entire_path[i], pathNumber, "Null", 2);
                                 pointsCounter++;
                                 
-                                drawLine(points_table, 1);
-                                pathNumber++;
+                            }
+                            points_table.push(l);
+                            drawPoint(points_table, l, "Null", "Null", 2);
+                            pointsCounter++;
                             
-                            
+                            drawLine(points_table, 1);
+                            pathNumber++;
+                        
+                        
 
-                        });
-                    }
+                    });
+                    
                 
                 }
                 else{
@@ -644,6 +663,9 @@ function search(){
     });  
 }
 function checkStick(){
+
+    //$('#yourid').attr('name')
+    
     var checkedValue = document.getElementById("stickToRoadCheckbox");
     if(checkedValue.checked)
         return 1;
@@ -695,3 +717,8 @@ function calculatePointsParemeters(){
        pointsCounter++;
     }
 }
+function search(){
+    
+    
+}
+
