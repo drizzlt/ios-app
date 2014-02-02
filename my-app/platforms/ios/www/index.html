@@ -27,26 +27,26 @@
 
             <div data-role="panel" id="mypanel" data-position="right"
                 data-position-fixed="true" data-display="overlay">
-                <div data-role="collapsible-set" data-theme="a">
+                <div data-role="collapsible-set" data-theme="a" id="collapsible-set-1">
                     <div data-role="collapsible" data-collapsed="false">
                         <h3>Activities type:</h3>
-                        <div data-role="fieldcontain">
-                            <fieldset data-role="controlgroup">
-                                
-                                    <input type="radio" name="radio-choice-1" id="radio-choice-1" value="choice-1" checked="checked" />
-                                    <label for="radio-choice-1">Running</label>
+                        <div data-role="fieldcontain" id="fieldcontain">
+                            <fieldset data-role="controlgroup" id="controlgroup">
+                            
+                                <input type="radio" name="radio-choice-1" id="radio-choice-1" value="choice-1" checked="checked" />
+                                <label for="radio-choice-1">Running</label>
 
-                                    <input type="radio" name="radio-choice-1" id="radio-choice-2" value="choice-2"  />
-                                    <label for="radio-choice-2">Walking</label>
+                                <input type="radio" name="radio-choice-1" id="radio-choice-2" value="choice-2"  />
+                                <label for="radio-choice-2">Walking</label>
 
-                                    <input type="radio" name="radio-choice-1" id="radio-choice-3" value="choice-3"  />
-                                    <label for="radio-choice-3">Nordic walking</label>
+                                <input type="radio" name="radio-choice-1" id="radio-choice-3" value="choice-3"  />
+                                <label for="radio-choice-3">Nordic walking</label>
 
-                                    <input type="radio" name="radio-choice-1" id="radio-choice-4" value="choice-4"  />
-                                    <label for="radio-choice-4">Biking</label>
+                                <input type="radio" name="radio-choice-1" id="radio-choice-4" value="choice-4"  />
+                                <label for="radio-choice-4">Biking</label>
 
-                                    <input type="radio" name="radio-choice-1" id="radio-choice-5" value="choice-5"  />
-                                    <label for="radio-choice-5">skating</label>     
+                                <input type="radio" name="radio-choice-1" id="radio-choice-5" value="choice-5"  />
+                                <label for="radio-choice-5">skating</label>     
                             </fieldset>
                         </div>
                         
@@ -55,11 +55,11 @@
                         <h3>Map Options</h3>
                         <div data-role="fieldcontain">
                             <fieldset data-role="controlgroup">
-                                    <input type="radio" name="radio2-choice-1" id="radio-choice-1" value="choice-1" checked="checked" />
-                                    <label for="radio-choice-1">Stick to map mode</label>
+                                <input type="radio" name="radio2-choice-1" id="radio-choice-1" value="choice-1" checked="checked" />
+                                <label for="radio-choice-1">Stick to map mode</label>
 
-                                    <input type="radio" name="radio2-choice-1" id="radio-choice-2" value="choice-2"  />
-                                    <label for="radio-choice-2">Normal mode</label>
+                                <input type="radio" name="radio2-choice-1" id="radio-choice-2" value="choice-2"  />
+                                <label for="radio-choice-2">Normal mode</label>
                             </fieldset>
                         </div>
                     </div>
@@ -68,11 +68,11 @@
                         <h3>Theme options</h3>
                         <div data-role="fieldcontain">
                             <fieldset data-role="controlgroup">
-                                    <input type="radio" name="radio3-choice-1" id="radio-choice-1" value="choice-1" checked="checked" />
-                                    <label for="radio-choice-1">White</label>
+                                <input type="radio" name="radio3-choice-1" id="radio-choice-1" value="choice-1" checked="checked" />
+                                <label for="radio-choice-1">White</label>
 
-                                    <input type="radio" name="radio3-choice-1" id="radio-choice-2" value="choice-2"  />
-                                    <label for="radio-choice-2">Black</label>
+                                <input type="radio" name="radio3-choice-1" id="radio-choice-2" value="choice-2"  />
+                                <label for="radio-choice-2">Black</label>
                             </fieldset>
                         </div>
                     </div>
@@ -82,6 +82,18 @@
                             <input type="search" id="search" value="" />
                         </div>
                     </div>
+
+                     <div data-role="collapsible">
+                        <h3>Trening Statistics</h3>
+                        <div data-role="fieldcontain">
+                            <fieldset data-role="controlgroup">
+                                <label for="radio-choice-1">Calories</label>
+                                <label for="radio-choice-2">Distance</label>
+                            </fieldset>
+                        </div>
+                    </div>
+
+
                 </div>
             </div>
 
@@ -94,14 +106,14 @@
 
 
                 <div style="float:left;">
-                    <button class="CustomButton" data-theme="a"id="buttonLeft" onClick="removeLastPoint()"> Cofnij </button>
+                    <button class="CustomButton" data-theme="a" id="buttonLeft" onClick="removeLastPoint()"> UNDO </button>
                 </div>
                 
                 <div id="panelCenter"> 
                     <div id="length"></div>
                 </div>
                 <div style="float:left;">
-                    <button class="CustomButton" id="buttonRight" data-theme="a"onClick="clearTables()"> Wyczysc </button>
+                    <button class="CustomButton" id="buttonRight" data-theme="a"onClick="clearTables()"> CLEAR </button>
                 </div>
 
                 <a href="#mypanel">

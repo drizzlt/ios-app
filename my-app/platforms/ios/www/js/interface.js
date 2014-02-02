@@ -18,3 +18,14 @@ function resolution_handling() {
     $("#panelCenter").css("width", ((viewport.width*1/3)-12)+"px" );
     $("#panelCenter").css("height", buttonSize.height+"px");
 }
+function theme_handling(change){
+    
+    $( "#buttonLeft" ).buttonMarkup({theme: change});
+    $( "#buttonRight" ).buttonMarkup({theme: change});
+
+    //$('[data-role=collapsible]').find('a').toggleClass(oldclass + ' ui-btn-hover-a').toggleClass(newclass + ' ui-btn-hover-b');
+    //$( '[data-role=collapsible]' ).collapsible( "option", "theme", change );
+    $('[data-role=collapsible-set]').collapsibleset("option", "theme", change );
+    $('[data-role=collapsible]').collapsible("option", "theme", change );
+
+}

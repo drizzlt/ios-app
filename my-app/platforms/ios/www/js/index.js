@@ -28,7 +28,7 @@ var app = {
     },
     onDeviceReady: function() {
         //TODO: jak ogarne jak pobrac rozmiar ekranu to tu to zmienie, narazie na sztywno --->Solving
-
+        window.addEventListener('orientationchange', doOnOrientationChange);
         resolution_handling();
         initializeMap();
 
@@ -36,6 +36,20 @@ var app = {
 
 
 };
+ function doOnOrientationChange(){
+    switch(window.orientation) 
+    {  
+      case -90:
+        resolution_handling();
+        break;
+      case 90:
+        resolution_handling();
+        break; 
+      default:
+        resolution_handling();
+        break; 
+    }
+}
 function initializeMap(){
      points_table = new Array();
      points_table_shape = new Array();
@@ -50,7 +64,17 @@ function initializeMap(){
         center:new google.maps.LatLng(52.068165,20.076803),
         zoom:6,
         mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
+    };        
+ 
+    $(document).on('change', "input[name*='radio3-choice-']", function(){ 
+        var choice = $(this).val();
+        if(choice=="choice-1"){
+            theme_handling("a");
+        }
+        if(choice=="choice-2"){
+            theme_handling("b");
+        }
+    });
      $("#search").bind( "keyup change", function() {
         var loc = this.value;
 
