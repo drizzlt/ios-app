@@ -18,6 +18,7 @@ var data = {};
 
 var directionsService;
 var geocoder;
+var selectedActivity = null;
 var app = {
     // Application Constructor
     initialize: function() {
@@ -27,9 +28,9 @@ var app = {
         document.addEventListener('deviceready', this.onDeviceReady, false);
     },
     onDeviceReady: function() {
-        //TODO: jak ogarne jak pobrac rozmiar ekranu to tu to zmienie, narazie na sztywno --->Solving
+        doOnOrientationChange();
         window.addEventListener('orientationchange', doOnOrientationChange);
-        resolution_handling();
+        
         initializeMap();
 
     },
@@ -40,15 +41,14 @@ var app = {
     switch(window.orientation) 
     {  
       case -90:
-        resolution_handling();
-        break;
       case 90:
-        resolution_handling();
+        resolution_handling("landscape");
         break; 
       default:
-        resolution_handling();
+        resolution_handling("portrait");
         break; 
     }
+
 }
 function initializeMap(){
      points_table = new Array();
@@ -60,12 +60,37 @@ function initializeMap(){
      directionsService = new google.maps.DirectionsService();
      geocoder = new google.maps.Geocoder();
      checkStickStatus = 1;
+     selectedActivity =1;
+     calcCalories(totalDistance());
      var mapOptions = {
         center:new google.maps.LatLng(52.068165,20.076803),
         zoom:6,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     };        
- 
+    $(document).on('change', "input[name*='radio-choice-']", function(){ 
+        var choice = $(this).val();
+        if(choice=="choice-1"){
+            selectedActivity=1;
+            calcCalories(totalDistance());
+        }
+        else if(choice=="choice-2"){
+            selectedActivity=2;
+            calcCalories(totalDistance());
+        }
+        else if(choice=="choice-3"){
+            selectedActivity=3;
+            calcCalories(totalDistance());
+        }
+        else if(choice=="choice-4"){
+            selectedActivity=4;
+            calcCalories(totalDistance());
+        }
+        else if(choice=="choice-5"){
+           selectedActivity=5;
+           calcCalories(totalDistance());
+        }
+        
+    });  
     $(document).on('change', "input[name*='radio3-choice-']", function(){ 
         var choice = $(this).val();
         if(choice=="choice-1"){
@@ -74,6 +99,9 @@ function initializeMap(){
         if(choice=="choice-2"){
             theme_handling("b");
         }
+    });
+    $( "#weight" ).bind( "change", function(event, ui) {
+        calcCalories(totalDistance());
     });
      $("#search").bind( "keyup change", function() {
         var loc = this.value;
@@ -548,6 +576,7 @@ function drawLine(points_table, color){
     lines_table_shape.push(path);
     path.setMap(map);
     showDistance();
+    calcCalories(totalDistance());
 }
 function setPointStyle(number){
     var style_table = [];
@@ -646,7 +675,7 @@ function removeLastPoint(){
     }
 }
 function clearTables(){
-    var state = confirm("Czy na pewno?");
+    var state = confirm("Are you SURE?");
     if(state){
         for(i=0; i< points_table_shape.length; i++){
             points_table_shape[i].setMap(null);
@@ -666,6 +695,7 @@ function clearTables(){
 function showDistance(){
     featureLength = totalDistance();
     document.getElementById("length").innerHTML = featureLength.toFixed(2) + " km   "+" " ;
+    document.getElementById("distance").innerHTML = featureLength.toFixed(2) + " km   "+" " ;
 }
 function totalDistance(){
     var dist=0.0;
@@ -741,8 +771,26 @@ function calculatePointsParemeters(){
        pointsCounter++;
     }
 }
-function search(){
-    
-    
+function calcCalories(distance){
+  
+
+    var calories = 0;
+    if(document.getElementById("weight")!=null)
+        var weight  = document.getElementById("weight").value;    
+    if(selectedActivity == "1"){
+        calories = distance*weight+(0.08*weight)*distance;
+        document.getElementById("calories").innerHTML = calories.toFixed(2) + " kcal";
+    }
+    else if(selectedActivity == "2"){
+        calories = distance*weight+(0.78*weight)*distance;
+        document.getElementById("calories").innerHTML = calories.toFixed(2) + " kcal";
+    }
+    else{
+        calories = distance*weight+(0.08*weight)*distance;
+        if(document.getElementById("calories")!=null)
+            document.getElementById("calories").innerHTML = calories.toFixed(2) + " kcal";
+    }
+
+    return calories;
 }
 

@@ -23,13 +23,13 @@
     </head>
 
     <body>
-        <div data-role="page">
+        <div data-role="page" id="page">
 
             <div data-role="panel" id="mypanel" data-position="right"
                 data-position-fixed="true" data-display="overlay">
                 <div data-role="collapsible-set" data-theme="a" id="collapsible-set-1">
                     <div data-role="collapsible" data-collapsed="false">
-                        <h3>Activities type:</h3>
+                        <h3>Activities type</h3>
                         <div data-role="fieldcontain" id="fieldcontain">
                             <fieldset data-role="controlgroup" id="controlgroup">
                             
@@ -51,6 +51,26 @@
                         </div>
                         
                     </div>
+
+                    <div data-role="collapsible">
+                        <h3>Personal Options</h3>
+                        <div data-role="fieldcontain" id="fieldcontain">
+                            <fieldset data-role="controlgroup" id="controlgroup">
+                            
+                                <label for="height">Height:</label>
+                                <input type="text" name="name" id="height" value=""  />
+                                <label for="weight">Weight:</label>
+                                <input type="text" name="name" id="weight" value=""  />
+                            </fieldset>
+                        </div>
+                        
+                    </div>
+
+
+
+
+
+
                     <div data-role="collapsible">
                         <h3>Map Options</h3>
                         <div data-role="fieldcontain">
@@ -85,11 +105,9 @@
 
                      <div data-role="collapsible">
                         <h3>Trening Statistics</h3>
-                        <div data-role="fieldcontain">
-                            <fieldset data-role="controlgroup">
-                                <label for="radio-choice-1">Calories</label>
-                                <label for="radio-choice-2">Distance</label>
-                            </fieldset>
+                        <div class="ui-grid-a">
+                            <div class="ui-block-a"><strong>Distance</strong> <p id="distance">distance</p></div>
+                            <div class="ui-block-b"><strong>Calories</strong><p id="calories">Calories</p></div>
                         </div>
                     </div>
 
