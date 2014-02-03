@@ -777,18 +777,23 @@ function calcCalories(distance){
     var calories = 0;
     if(document.getElementById("weight")!=null)
         var weight  = document.getElementById("weight").value;    
-    if(selectedActivity == "1"){
-        calories = distance*weight+(0.08*weight)*distance;
-        document.getElementById("calories").innerHTML = calories.toFixed(2) + " kcal";
-    }
-    else if(selectedActivity == "2"){
-        calories = distance*weight+(0.78*weight)*distance;
-        document.getElementById("calories").innerHTML = calories.toFixed(2) + " kcal";
+    if(weight>0){
+        if(selectedActivity == "1"){
+            calories = distance*weight+(0.08*weight)*distance;
+            document.getElementById("calories").innerHTML = calories.toFixed(2) + " kcal";
+        }
+        else if(selectedActivity == "2"){
+            calories = distance*weight+(0.78*weight)*distance;
+            document.getElementById("calories").innerHTML = calories.toFixed(2) + " kcal";
+        }
+        else{
+            calories = distance*weight+(0.08*weight)*distance;
+            if(document.getElementById("calories")!=null)
+                document.getElementById("calories").innerHTML = calories.toFixed(2) + " kcal";
+        }
     }
     else{
-        calories = distance*weight+(0.08*weight)*distance;
-        if(document.getElementById("calories")!=null)
-            document.getElementById("calories").innerHTML = calories.toFixed(2) + " kcal";
+        document.getElementById("calories").innerHTML = "Check Personal Options first"
     }
 
     return calories;
