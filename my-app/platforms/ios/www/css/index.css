@@ -101,6 +101,7 @@ h1 {
     opacity: 0.8;
     background: black;
     float:left;
+     z-index: 10001;
     margin-top:8px;
 }
 #length{
@@ -111,9 +112,11 @@ h1 {
 }
 #buttonLeft{
     float: center;
+    z-index: 10001;
 }
 #buttonRight{
     float: left;
+    z-index: 10001;
 }
 .CustomButton{
     border: 0 none;

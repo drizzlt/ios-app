@@ -15,6 +15,7 @@ var saved_roads = null;
 var response_table = null;
 
 var data = {};
+var howManySaved=0;
 
 var directionsService;
 var geocoder;
@@ -62,6 +63,7 @@ function initializeMap(){
      checkStickStatus = 1;
      selectedActivity =1;
      calcCalories(totalDistance());
+     howManySaved= localStorage.getItem("saveNumber");
      var mapOptions = {
         center:new google.maps.LatLng(52.068165,20.076803),
         zoom:6,
@@ -798,4 +800,83 @@ function calcCalories(distance){
 
     return calories;
 }
+function generateJson(){
+
+    
+   var jsonString = {};
+   var points = [];
+   jsonString.points = points;
+    for(var i =0; i<points_table_shape.length;i++){
+        var point = {
+            "position": points_table_shape[i].position,
+            "pathNumber": points_table_shape[i].pathNumber,
+            "id": points_table_shape[i].id,
+            
+        }
+        jsonString.points.push(point);
+   }
+    jsonString = JSON.stringify(jsonString);
+    return jsonString;
+
+    
+    //window.open( "data:text/json;charset=utf-8," + escape(jsonString));
+}
+function saveRoad(){
+    //alert(localStorage.getItem("saveNumber"));
+    if (typeof(localStorage) == 'undefined' ) {
+        alert('Your browser does not support HTML5 localStorage. Try upgrading.');
+    } 
+    else {
+        if(points_table.length>1){
+            try {
+                howManySaved++;
+                localStorage.setItem("saveNumber", howManySaved); //saves to the database, "key", "value"
+                localStorage.setItem(howManySaved, generateJson());
+            } catch (e) {
+                 if (e == QUOTA_EXCEEDED_ERR) {
+                     alert('Quota exceeded!'); //data wasn't successfully saved due to quota exceed so throw an error
+                }
+            }
+            //localStorage.removeItem("saveNumber"); //deletes the matching item from the database
+            //localStorage.removeItem("saveNumber");
+            //howManySaved=0;
+        }
+        else{
+            alert("nothing to save");
+        }
+    }
+}
+function loadRoad(){
+    var road = localStorage.getItem(howManySaved);
+    loadCurrentRoad(road);
+}
+function loadCurrentRoad(json){
+    points_table = new Array();
+    points_table_shape = new Array();
+    var json_table = JSON.parse(json);
+
+    var points_table_temp = [];
+    var tempPoint1; 
+    var tempPoint2; 
+    var latLng;
+    var pathNumber;
+
+    pointsCounter=0;
+    for(i=0; i<json_table.points.length; i++){
+        tempPoint1 = json_table.points[i].position.ob;
+        tempPoint2 = json_table.points[i].position.pb;
+        pathNumber = json_table.points[i].pathNumber;
+        latLng = new google.maps.LatLng(tempPoint1,tempPoint2);
+        points_table.push(latLng);
+        //drawPoint(points_table,points_table[i], pathNumber, "Null", 2);
+        pointsCounter++;
+
+    }
+    drawLine(points_table,1);
+
+}
+
+
+
+
 
